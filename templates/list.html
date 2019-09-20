@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索结果</title>
+</head>
+<body>
+{% for blog in list %}
+<li>
+    <span onclick="show('{{blog.id}}')">{{ blog.name }}</span>
+    <span id="{{blog.id}}" style="display: none;">{{ blog.content }}</span>
+</li>
+{% endfor %}
+</body>
+<script>
+    var show = function (id) {
+        window.location.href = '/show?id=' + id
+    }
+</script>
+</html>

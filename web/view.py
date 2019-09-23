@@ -4,6 +4,8 @@ import requests
 from django.shortcuts import render
 from django.http import HttpResponse
 
+es_url = 'http://127.0.0.1:9200'
+
 def hello(request):
     context = {}
     context['hello'] = 'Hello World!'
@@ -12,13 +14,13 @@ def hello(request):
 
 
 def show(request):
-    url = "http://127.0.0.1:9200/meituan/blog/" + request.GET['id']
+    url = es_url + "/meituan/blog/" + request.GET['id']
     r = requests.get(url)
     return HttpResponse(json.loads(r.content)["_source"]["content"])
 
 
 def search(request):
-    url = "http://127.0.0.1:9200/meituan/blog/_search"
+    url = es_url + "/meituan/blog/_search"
     data = {
         "query": {
             "match": {

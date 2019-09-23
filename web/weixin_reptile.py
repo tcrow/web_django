@@ -5,9 +5,6 @@ from urllib import request
 
 import requests
 
-
-
-
 cookie = http.cookiejar.CookieJar()  # 声明一个CookieJar对象实例来保存cookie
 handler = request.HTTPCookieProcessor(cookie)  # 利用urllib2库的HTTPCookieProcessor对象来创建cookie处理器
 opener = request.build_opener(handler)  # 通过handler来构建opener

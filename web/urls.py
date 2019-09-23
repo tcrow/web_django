@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import url
 
 from . import view
 
@@ -25,4 +24,6 @@ urlpatterns = [
     path('hello/', view.hello),
     path('search/', view.search),
     path('show/', view.show),
+    path('reptile/', view.reptile),
+    path('do_reptile/', view.do_reptile),
 ]

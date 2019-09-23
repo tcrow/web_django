@@ -4,6 +4,8 @@ import requests
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from . import weixin_reptile
+
 es_url = 'http://10.0.0.39:9200'
 index = '/meituan/blog'
 
@@ -68,3 +70,12 @@ def search(request):
     context['p'] = request.GET['p']
 
     return render(request, 'list.html', context)
+
+
+def reptile(request):
+    return render(request, 'reptile.html', {})
+
+
+def do_reptile(request):
+    weixin_reptile.reptile(request.GET['url'], request.GET['prefix'])
+    return HttpResponse('执行成功')

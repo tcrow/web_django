@@ -38,7 +38,11 @@ def search(request):
                 "content": request.GET['c']
             }
         })
-    start = int(request.GET['p']) * 10
+    if int(request.GET['p']) < 0:
+        p = 0
+    else:
+        p = request.GET['p']
+    start = int(p) * 10
     data = {
         "size": 10,
         "from": start,
@@ -67,7 +71,7 @@ def search(request):
     context['list'] = list
     context['c'] = request.GET['c']
     context['q'] = request.GET['q']
-    context['p'] = request.GET['p']
+    context['p'] = p
 
     return render(request, 'list.html', context)
 

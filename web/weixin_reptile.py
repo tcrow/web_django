@@ -1,6 +1,7 @@
 # # coding:utf-8
 import http.cookiejar
 import json
+import time
 from urllib import request
 from . import view
 
@@ -72,4 +73,6 @@ def reptile(url, prefix):
     general_msg_list = json.loads(general_msg_list)
     for item in general_msg_list['list']:
         __save_es(item, prefix)
+    #非常重要，为了防止被封，每次抓取数据需要休息15秒
+    time.sleep(15)
     reptile(url.replace("offset=" + str(offset), 'offset=' + str(next_offset)), prefix)

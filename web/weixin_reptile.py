@@ -2,6 +2,7 @@
 import http.cookiejar
 import json
 from urllib import request
+from . import view
 
 import requests
 
@@ -33,17 +34,24 @@ def __save_es(item, prefix):
         return
     try:
         page = request.urlopen(content_url)
-    except:
-        print('出错了' + content_url)
+    except Exception as e:
+        print("访问微信链接出错了，错误原因" + e)
         return
     content = page.read().decode("utf-8")
+    __post_es(prefix + ' ' + title, content, comm['datetime'])
+
+
+'''
+推送文章数据给搜索引擎
+'''
+def __post_es(name, content, datetime):
     h = {'Accept-Charset': 'utf-8', 'Content-Type': 'application/json'}
     params = {
-        "name": prefix + ' ' + title,
+        "name": name,
         "content": content,
-        "datetime": comm['datetime']
+        "datetime": datetime
     }
-    resp = requests.post('http://10.0.0.39:9200/meituan/blog', headers=h, data=json.dumps(params))
+    resp = requests.post(view.es_url + view.index, headers=h, data=json.dumps(params))
     print(resp.content)
 
 
@@ -65,8 +73,3 @@ def reptile(url, prefix):
     for item in general_msg_list['list']:
         __save_es(item, prefix)
     reptile(url.replace("offset=" + str(offset), 'offset=' + str(next_offset)), prefix)
-
-#
-# u = 'https://mp.weixin.qq.com/mp/profile_ext?action=getmsgf=json'
-# re = 'shufang'
-# reptile(u, re)

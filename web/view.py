@@ -7,7 +7,7 @@ from django.shortcuts import render
 from . import weixin_reptile
 
 es_url = 'http://10.0.0.39:9200'
-index = '/meituan/blog'
+index = '/wechat/history'
 
 
 def hello(request):

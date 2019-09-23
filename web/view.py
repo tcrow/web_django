@@ -40,6 +40,13 @@ def search(request):
     data = {
         "size": 10,
         "from": start,
+        "sort": [
+            {
+                "datetime": {
+                    "order": "desc"
+                }
+            }
+        ],
         "query": {
             "bool": {
                 "must": must

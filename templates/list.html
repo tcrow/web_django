@@ -11,8 +11,25 @@
     <span id="{{blog.id}}" style="display: none;">{{ blog.content }}</span>
 </li>
 {% endfor %}
+<br>
+<button style="float:left;margin-left:10px;" onclick="toPage(-1)">上一页</button>
+<form style="float:left;margin-left:10px;" id="form" action="/search" method="get">
+    <input type="hidden" name="c" value="{{c}}">
+    <input type="hidden" name="q" value="{{q}}">
+    <input id="p" style="width:30px;" type="text" name="p" value="{{p}}"> 页码
+    <button type="submit">跳转</button>
+</form>
+<button style="float:left;margin-left:10px;" onclick="toPage(1)">下一页</button>
+
 </body>
 <script>
+    var toPage = function (num) {
+        console.info(document.getElementsByName('p'))
+        var p = document.getElementById('p');
+        p.value = parseInt(p.value) + num
+        var form = document.getElementById('form')
+        form.submit();
+    }
     var show = function (id) {
         window.location.href = '/show?id=' + id
     }

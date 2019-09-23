@@ -20,6 +20,7 @@ from django.conf.urls import url
 from . import view
 
 urlpatterns = [
+    path('', view.hello),
     path('admin/', admin.site.urls),
     path('hello/', view.hello),
     path('search/', view.search),

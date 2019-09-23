@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 es_url = 'http://127.0.0.1:9200'
+index = '/meituan/blog/'
 
 def hello(request):
     context = {}
@@ -14,17 +15,20 @@ def hello(request):
 
 
 def show(request):
-    url = es_url + "/meituan/blog/" + request.GET['id']
+    url = es_url + index + request.GET['id']
     r = requests.get(url)
     return HttpResponse(json.loads(r.content)["_source"]["content"])
 
 
 def search(request):
-    url = es_url + "/meituan/blog/_search"
+    url = es_url + index + "/_search"
     data = {
         "query": {
             "match": {
                 "name": request.GET['q']
+            },
+            "match_phrase": {
+                "content": request.GET['c']
             }
         },
         "size": 10

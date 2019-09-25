@@ -34,21 +34,25 @@ def __save_es(item, prefix):
     if len(content_url.strip()) == 0:
         return
     try:
+        print(content_url)
         page = request.urlopen(content_url)
     except Exception as e:
         print("访问微信链接出错了，错误原因" + e)
         return
     content = page.read().decode("utf-8")
-    __post_es(prefix + ' ' + title, content, comm['datetime'])
+    __post_es(prefix + ' ' + title, content_url, content, comm['datetime'])
 
 
 '''
 推送文章数据给搜索引擎
 '''
-def __post_es(name, content, datetime):
+
+
+def __post_es(name, source_url, content, datetime):
     h = {'Accept-Charset': 'utf-8', 'Content-Type': 'application/json'}
     params = {
         "name": name,
+        "source_url": source_url,
         "content": content,
         "datetime": datetime
     }
@@ -73,6 +77,6 @@ def reptile(url, prefix):
     general_msg_list = json.loads(general_msg_list)
     for item in general_msg_list['list']:
         __save_es(item, prefix)
-    #非常重要，为了防止被封，每次抓取数据需要休息15秒
+    # 非常重要，为了防止被封，每次抓取数据需要休息15秒
     time.sleep(15)
     reptile(url.replace("offset=" + str(offset), 'offset=' + str(next_offset)), prefix)

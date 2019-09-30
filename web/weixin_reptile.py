@@ -3,9 +3,10 @@ import http.cookiejar
 import json
 import time
 from urllib import request
-from . import view
 
 import requests
+
+from . import view
 
 cookie = http.cookiejar.CookieJar()  # 声明一个CookieJar对象实例来保存cookie
 handler = request.HTTPCookieProcessor(cookie)  # 利用urllib2库的HTTPCookieProcessor对象来创建cookie处理器
@@ -40,7 +41,7 @@ def __save_es(item, prefix):
         print("访问微信链接出错了，错误原因" + e)
         return
     content = page.read().decode("utf-8")
-    __post_es(prefix + ' ' + title, content_url, content, comm['datetime'])
+    __post_es(prefix, title, content_url, content, comm['datetime'])
 
 
 '''
@@ -48,23 +49,25 @@ def __save_es(item, prefix):
 '''
 
 
-def __post_es(name, source_url, content, datetime):
+def __post_es(prefix, name, source_url, content, datetime):
     h = {'Accept-Charset': 'utf-8', 'Content-Type': 'application/json'}
     params = {
+        "prefix": prefix,
         "name": name,
         "source_url": source_url,
         "content": content,
         "datetime": datetime
     }
-    resp = requests.post(view.es_url + view.index, headers=h, data=json.dumps(params))
+    url = view.es_url + view.es_index
+    resp = requests.post(url, headers=h, data=json.dumps(params))
     print(resp.content)
 
 
 def reptile(url, prefix):
+    url = url.replace('home', 'getmsg') + '&f=json&offset=0&count=10'
     r = request.Request(url=url, headers=headers, method="GET")
     response = opener.open(r)
-    offset = url[url.index('offset='):]
-    offset = int(offset[7:offset.index('&')])
+    offset = 0
     htmlcode = response.read().decode()
     j = json.loads(htmlcode)
     if j['ret'] != 0:

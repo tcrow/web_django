@@ -7,29 +7,29 @@ from django.shortcuts import render
 from . import weixin_reptile
 
 es_url = 'http://127.0.0.1:9200'
-index = '/wechat/history'
+es_index = '/wechat/history'
 
 
-def hello(request):
+def index(request):
     context = {}
     context['hello'] = 'Hello World!'
     context['user'] = 'TCrow'
-    return render(request, 'hello.html', context)
+    return render(request, 'index.html', context)
 
 
 def show(request):
-    url = es_url + index + '/' + request.GET['id']
+    url = es_url + es_index + '/' + request.GET['id']
     r = requests.get(url)
     return HttpResponse(json.loads(r.content)["_source"]["content"])
 
 
 def search(request):
-    url = es_url + index + "/_search"
+    url = es_url + es_index + "/_search"
     must = []
     if len(request.GET['q'].strip()):
         must.append({
             "match": {
-                "name": request.GET['q']
+                "prefix": request.GET['q']
             }
         })
     if len(request.GET['c'].strip()):

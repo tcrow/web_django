@@ -17,13 +17,15 @@ from django.contrib import admin
 from django.urls import path
 
 from . import view
+from . import wechat_server
 
 urlpatterns = [
-    path('', view.hello),
+    path('', view.index),
     path('admin/', admin.site.urls),
-    path('hello/', view.hello),
+    path('index/', view.index),
     path('search/', view.search),
     path('show/', view.show),
     path('reptile/', view.reptile),
     path('do_reptile/', view.do_reptile),
+    path('wechat/', wechat_server.index),
 ]

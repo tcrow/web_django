@@ -64,10 +64,15 @@ def __post_es(prefix, name, source_url, content, datetime):
 
 
 def reptile(url, prefix):
-    url = url.replace('home', 'getmsg') + '&f=json&offset=0&count=10'
+    url = url.replace('home', 'getmsg')
+    if 'offset' in url:
+        url = url
+    else:
+        url += '&f=json&offset=0&count=10'
     r = request.Request(url=url, headers=headers, method="GET")
     response = opener.open(r)
-    offset = 0
+    offset = url[url.index('offset='):]
+    offset = int(offset[7:offset.index('&')])
     htmlcode = response.read().decode()
     j = json.loads(htmlcode)
     if j['ret'] != 0:
@@ -81,5 +86,6 @@ def reptile(url, prefix):
     for item in general_msg_list['list']:
         __save_es(item, prefix)
     # 非常重要，为了防止被封，每次抓取数据需要休息15秒
+    url = url.replace("offset=" + str(offset), 'offset=' + str(next_offset))
     time.sleep(15)
-    reptile(url.replace("offset=" + str(offset), 'offset=' + str(next_offset)), prefix)
+    reptile(url, prefix)

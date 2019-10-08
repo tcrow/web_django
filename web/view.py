@@ -1,4 +1,5 @@
 import json
+import threading
 
 import requests
 from django.http import HttpResponse
@@ -6,8 +7,9 @@ from django.shortcuts import render
 
 from . import weixin_reptile
 
-es_url = 'http://127.0.0.1:9200'
+es_url = 'http://10.0.0.39:9200'
 es_index = '/wechat/history'
+lock = threading.RLock()
 
 
 def index(request):
@@ -81,5 +83,16 @@ def reptile(request):
 
 
 def do_reptile(request):
-    weixin_reptile.reptile(request.GET['url'], request.GET['prefix'])
+    flag = lock.acquire(timeout=3)
+    if flag:
+        try:
+            weixin_reptile.reptile(request.GET['url'], request.GET['prefix'])
+        finally:
+            lock.release()
+    else:
+        return HttpResponse('正在执行中，请稍后重试')
+    return HttpResponse('执行成功')
+
+
+def api(request):
     return HttpResponse('执行成功')

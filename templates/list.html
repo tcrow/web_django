@@ -8,7 +8,6 @@
 {% for blog in list %}
 <li>
     <span onclick="show('{{blog.id}}')">{{ blog.name }}</span>
-    <span id="{{blog.id}}" style="display: none;">{{ blog.content }}</span>
 </li>
 {% endfor %}
 <br>

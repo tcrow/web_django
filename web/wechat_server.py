@@ -12,13 +12,13 @@ token = '123'
 
 @csrf_exempt
 def index(request):
-    logger.error("一个更萌的请求过来了。。。。")
 
     signature = request.GET['signature']
     echostr = request.GET['echostr']
     timestamp = request.GET['timestamp']
     nonce = request.GET['nonce']
     list = [token, timestamp, nonce]
+    logger.error(list)
     list.sort()
     sha1 = hashlib.sha1()
     map(sha1.update, list)

@@ -2,7 +2,7 @@
  * @Author: 罗孟仕
  * @Date: 2019-10-09 09:40:24
  * @LastEditors: 罗孟仕
- * @LastEditTime: 2019-10-09 16:23:37
+ * @LastEditTime: 2019-10-09 16:24:24
  * @Description: 
  -->
 {% load static %}
@@ -20,8 +20,8 @@
     <div class="content">
         <div class="list">
             {% for blog in list %}
-            <li class="list_cell hover_show">
-                <span onclick="show('{{blog.id}}')">{{ blog.name }}</span>
+            <li class="list_cell hover_show" onclick="show('{{blog.id}}')">
+                <span>{{ blog.name }}</span>
             </li>
             {% endfor %}
         </div>

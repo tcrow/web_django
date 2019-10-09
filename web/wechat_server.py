@@ -18,6 +18,7 @@ def index(request):
     timestamp = request.GET['timestamp']
     nonce = request.GET['nonce']
     list = [token, timestamp, nonce]
+    logger.error(list)
     list.sort()
     sha1 = hashlib.sha1()
     map(sha1.update, list)

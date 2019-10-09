@@ -15,7 +15,6 @@ token = '123'
 @csrf_exempt
 def index(request):
     signature = request.GET['signature']
-    echostr = request.GET['echostr']
     timestamp = request.GET['timestamp']
     nonce = request.GET['nonce']
     list = [token, timestamp, nonce]
@@ -23,15 +22,14 @@ def index(request):
     sha1 = hashlib.sha1()
     map(sha1.update, list)
     hashcode = sha1.hexdigest()
-    logger.error("handle/GET func: signature, echostr, timestamp, nonce: ", signature, echostr, timestamp, nonce)
-    logger.error("handle/GET func: hashcode, signature: ", hashcode, signature)
     if hashcode == signature:
-        return HttpResponse(echostr)
+        xml = request.body.decode()
+        msg = parse_message(xml)
+        logger.error(msg)
+        return HttpResponse()
     else:
         return HttpResponse()
-    xml = request.body.decode()
-    msg = parse_message(xml)
-    print(msg)
+
     # if msg.type == 'link':
     #     return HttpResponse()
     # else:

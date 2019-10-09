@@ -1,3 +1,10 @@
+'''
+@Author: 罗孟仕
+@Date: 2019-10-09 09:40:24
+@LastEditors: 罗孟仕
+@LastEditTime: 2019-10-09 09:40:24
+@Description: 
+'''
 """
 Django settings for web project.
 
@@ -112,7 +119,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'static')
+]
 BASE_LOG_DIR = os.path.join(BASE_DIR, "log")
 LOGGING = {
     'version': 1,

@@ -1,18 +1,38 @@
+<!--
+ * @Author: 罗孟仕
+ * @Date: 2019-10-09 09:40:24
+ * @LastEditors: 罗孟仕
+ * @LastEditTime: 2019-10-09 15:15:46
+ * @Description: 
+ -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>公众号文章搜索</title>
+    <link rel="stylesheet" href=" {% static 'css/style.css' %}">
 </head>
+
 <body>
-<h1>{{user}}：<br>{{ hello }}</h1>
-<form action="/search" method="get">
-    <input type="hidden" name="p" value="0">
-    <input type="text" name="q"><br>
-    <input type="text" name="c">
-    <input type="submit" value="搜索">
-</form>
-<script>
-</script>
+    <div class="content">
+        <div class="list">
+            <h1 class="tac">{{user}}：<br>{{ hello }}</h1>
+            <form action="/search" method="get">
+                <div class="form_item">
+                    <input type="hidden" name="p" value="0">
+                    <input class="n_input" type="text" name="q">
+                </div>
+                <div class="form_item">
+                    <input class="n_input" type="text" name="c">
+                </div>
+                <input type="submit" class="footer" value="搜索">
+            </form>
+        </div>
+    </div>
+    <script>
+    </script>
 </body>
+
 </html>

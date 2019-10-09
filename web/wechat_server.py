@@ -12,7 +12,7 @@ token = '123'
 
 @csrf_exempt
 def index(request):
-    logger.info("一个更萌的请求过来了。。。。")
+    logger.error("一个更萌的请求过来了。。。。")
 
     signature = request.GET['signature']
     echostr = request.GET['echostr']

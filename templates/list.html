@@ -1,25 +1,44 @@
+<!--
+ * @Author: 罗孟仕
+ * @Date: 2019-10-09 09:40:24
+ * @LastEditors: 罗孟仕
+ * @LastEditTime: 2019-10-09 16:15:20
+ * @Description: 
+ -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
     <title>搜索结果</title>
+    <link rel="stylesheet" href=" {% static 'css/style.css' %}">
 </head>
-<body>
-{% for blog in list %}
-<li>
-    <span onclick="show('{{blog.id}}')">{{ blog.name }}</span>
-</li>
-{% endfor %}
-<br>
-<button style="float:left;margin-left:10px;" onclick="toPage(-1)">上一页</button>
-<form style="float:left;margin-left:10px;" id="form" action="/search" method="get">
-    <input type="hidden" name="c" value="{{c}}">
-    <input type="hidden" name="q" value="{{q}}">
-    <input id="p" style="width:30px;" type="text" name="p" value="{{p}}"> 页码
-    <button type="submit">跳转</button>
-</form>
-<button style="float:left;margin-left:10px;" onclick="toPage(1)">下一页</button>
 
+<body>
+    {% for blog in list %}
+    <div class="content">
+        <div class="list">
+            <li class="list_cell hover_show">
+                <span onclick="show('{{blog.id}}')">{{ blog.name }}</span>
+            </li>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="footer">
+
+        <div class="pagination">
+            <button style="float:left;margin-left:10px;" class="n_button" onclick="toPage(-1)">上一页</button>
+            <form style="float:left;margin-left:10px;" id="form" action="/search" method="get">
+                <input type="hidden" name="c" value="{{c}}">
+                <input type="hidden" name="q" value="{{q}}">
+                <input id="p" class="n_input" style="width:60px;" type="text" name="p" value="{{p}}"> 页码
+                <button type="submit" class="n_button">跳转</button>
+            </form>
+            <button style="float:left;margin-left:10px;" class="n_button" onclick="toPage(1)">下一页</button>
+        </div>
+    </div>
 </body>
 <script>
     var toPage = function (num) {
@@ -33,4 +52,5 @@
         window.location.href = '/show?id=' + id
     }
 </script>
+
 </html>

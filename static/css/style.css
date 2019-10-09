@@ -1,40 +1,56 @@
-*{
+* {
     box-sizing: border-box;
 }
-body{
+
+body {
     overflow-x: hidden;
     margin: 0 auto;
     font-family: Helvetica, Tahoma, Arial, "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei";
     font-family: Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei";
     min-height: 100%;
     color: #333;
+    background-color: #f8f8f8;
 }
-.content{
+
+.content {
     display: flex;
     justify-content: center;
     min-height: 100vh;
     padding-bottom: 50px;
 }
-.list{
+
+.list {
     width: calc(100% - 30px);
 }
-.footer{
+
+.footer {
     position: fixed;
     bottom: 0;
     height: 50px;
     left: 0;
     right: 0;
 }
-input.footer{
+
+input.footer {
     width: 100%;
     line-height: 50px;
     background-color: #409EFF;
-    border:0;
+    border: 0;
     color: #fff;
     font-size: 16px;
     border-radius: 0;
 }
-.n_input{
+
+.n_button {
+    background-color: #409EFF;
+    border: 0;
+    color: #fff;
+    border-radius: 2px;
+    height: 28px;
+    line-height: 28px;
+}
+
+.n_input {
     -webkit-appearance: none;
     background-color: #FFFFFF;
     background-image: none;
@@ -53,12 +69,63 @@ input.footer{
     transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
     width: 100%;
 }
-.n_input:hover,.n_input:focus{
+
+.n_input:hover,
+.n_input:focus {
     border-color: #409EFF;
 }
-.tac{
+
+.tac {
     text-align: center;
 }
-.form_item{
+
+.form_item {
     margin-bottom: 12px;
+}
+
+.pagination {
+    height: 40px;
+    line-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.list_cell {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 16px;
+    overflow: hidden;
+    color: #323233;
+    font-size: 14px;
+    line-height: 24px;
+    background-color: #fff;
+}
+
+.list_cell:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
+
+.hover_show::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    border: inherit;
+    border-color: #000;
+    border-radius: inherit;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    content: ' ';
+}
+
+.hover_show:active::before {
+    opacity: 0.1;
 }

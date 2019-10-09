@@ -28,6 +28,9 @@ def index(request):
         logger.error(msg)
         return HttpResponse()
     else:
+        xml = request.body.decode()
+        msg = parse_message(xml)
+        logger.error(msg)
         return HttpResponse()
 
     # if msg.type == 'link':

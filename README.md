@@ -9,6 +9,7 @@ ctx + /wechat/ 微信消息接口
 
 # 使用方法：  
 ```
+安装python3
 pip install django
 pip install wechatpy
 pip install wechatpy[cryptography]

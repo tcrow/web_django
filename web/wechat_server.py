@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from wechatpy import parse_message
 
+from . import weixin_reptile
+
 # 生成一个以当前文件名为名字的logger实例
 logger = logging.getLogger(__name__)
 
@@ -24,18 +26,18 @@ def index(request):
     map(sha1.update, list)
     hashcode = sha1.hexdigest()
     if hashcode == signature:
-        xml = request.body.decode()
-        msg = parse_message(xml)
-        logger.error(msg)
+        parse_message(request)
+    else:
+        parse_message(request)
+
+    return HttpResponse()
+
+def parse_message(request):
+    xml = request.body.decode()
+    msg = parse_message(xml)
+    logger.error(msg)
+    if msg['MsgType'] == 'text' and 'https://mp.weixin.qq.com/mp/profile_ext?action=home' in msg['Content']:
+        weixin_reptile.reptile(msg['Content'],None)
         return HttpResponse()
     else:
-        xml = request.body.decode()
-        msg = parse_message(xml)
-        logger.error(msg)
         return HttpResponse()
-
-    # if msg.type == 'link':
-    #     return HttpResponse()
-    # else:
-    #     return HttpResponse()
-    return HttpResponse()

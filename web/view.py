@@ -22,8 +22,6 @@ lock = threading.RLock()
 
 def index(request):
     context = {}
-    context['hello'] = 'Hello World!'
-    context['user'] = 'TCrow'
     return render(request, 'index.html', context)
 
 

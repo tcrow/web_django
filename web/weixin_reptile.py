@@ -2,6 +2,7 @@
 import http.cookiejar
 import json
 import time
+import hashlib
 from urllib import request
 
 import requests
@@ -51,8 +52,17 @@ def __save_es(item, prefix):
 
 def __post_es(prefix, name, source_url, content, datetime):
     h = {'Accept-Charset': 'utf-8', 'Content-Type': 'application/json'}
+    m = hashlib.md5()
+    bname = str(name).encode()
+    m.update(bname)
+    md5 = m.hexdigest()
+    if '<strong class="profile_nickname">' in content:
+        nickname = content[content.index('<strong class="profile_nickname">'):]
+        nickname = nickname[33:nickname.index('</strong>')]
+        prefix = nickname
     params = {
         "prefix": prefix,
+        "md5": md5,
         "name": name,
         "source_url": source_url,
         "content": content,

@@ -36,8 +36,9 @@ def parse(request):
     xml = request.body.decode()
     msg = parse_message(xml)
     logger.error(msg)
-    if msg[0]['MsgType'] == 'text' and 'https://mp.weixin.qq.com/mp/profile_ext?action=home' in msg[0]['Content']:
-        weixin_reptile.reptile(msg[0]['Content'],None)
+    content = msg.pop('Content')
+    if msg.pop('MsgType') == 'text' and 'https://mp.weixin.qq.com/mp/profile_ext?action=home' in content:
+        weixin_reptile.reptile(content,None)
         return HttpResponse()
     else:
         return HttpResponse()

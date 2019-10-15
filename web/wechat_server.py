@@ -38,6 +38,7 @@ def parse(request):
     logger.error(msg)
     content = msg.content
     if msg.type == 'text' and 'https://mp.weixin.qq.com/mp/profile_ext?action=home' in content:
+        logger.error(content)
         weixin_reptile.reptile(content,None)
         return HttpResponse()
     else:

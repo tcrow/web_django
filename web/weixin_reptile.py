@@ -9,6 +9,7 @@ import requests
 
 from . import view
 
+
 cookie = http.cookiejar.CookieJar()  # 声明一个CookieJar对象实例来保存cookie
 handler = request.HTTPCookieProcessor(cookie)  # 利用urllib2库的HTTPCookieProcessor对象来创建cookie处理器
 opener = request.build_opener(handler)  # 通过handler来构建opener
@@ -56,6 +57,8 @@ def __post_es(prefix, name, source_url, content, datetime):
     bname = str(name).encode()
     m.update(bname)
     md5 = m.hexdigest()
+    if not check(md5):
+        return
     if '<strong class="profile_nickname">' in content:
         nickname = content[content.index('<strong class="profile_nickname">'):]
         nickname = nickname[33:nickname.index('</strong>')]
@@ -99,3 +102,26 @@ def reptile(url, prefix):
     url = url.replace("offset=" + str(offset), 'offset=' + str(next_offset))
     time.sleep(15)
     reptile(url, prefix)
+
+
+def check(md5):
+    data = {
+        "size": 1,
+        "from": 0,
+        "query": {
+            "bool": {
+                "must": [{
+                     "term": {
+                         "md5": md5
+                     }
+                 }]
+            }
+        }
+    }
+    headers = {'Accept-Charset': 'utf-8', 'Content-Type': 'application/json'}
+    url = view.es_url + view.es_index + "/_search"
+    r = requests.get(url, headers=headers, data=json.dumps(data))
+    hits = json.loads(r.content)['hits']['hits']
+    if hits['total'] > 0:
+        return False
+    return True

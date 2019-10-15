@@ -5,10 +5,9 @@
  * @LastEditTime: 2019-10-09 15:30:00
  * @Description: 
  -->
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
@@ -22,11 +21,11 @@
             <h1 class="tac">{{user}}：<br>{{ hello }}</h1>
             <form action="/search" method="get">
                 <div class="form_item">
-                    <input type="hidden" name="p" value="0">
-                    <input class="n_input" type="text" name="q">
+                    <input type="hidden" name="p" value="0" >
+                    <input class="n_input" type="text" name="q" placeholder="请输入公众号名称">
                 </div>
                 <div class="form_item">
-                    <input class="n_input" type="text" name="c">
+                    <input class="n_input" type="text" name="c" placeholder="请输入您要查找的内容">
                 </div>
                 <input type="submit" class="footer" value="搜索">
             </form>

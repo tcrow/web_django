@@ -4,6 +4,7 @@ import logging
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from wechatpy import parse_message
+import threading
 
 from . import weixin_reptile
 
@@ -12,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 # 公众号token
 token = '123'
+lock = threading.RLock()
 
 
 @csrf_exempt
@@ -39,7 +41,14 @@ def parse(request):
     content = msg.content
     if msg.type == 'text' and 'https://mp.weixin.qq.com/mp/profile_ext?action=home' in content:
         logger.error(content)
-        weixin_reptile.reptile(content,None)
+        flag = lock.acquire(timeout=3)
+        if flag:
+            try:
+                weixin_reptile.reptile(content,None)
+            finally:
+                lock.release()
+        else:
+            return HttpResponse('正在执行中，请稍后重试')
         return HttpResponse()
     else:
         return HttpResponse()

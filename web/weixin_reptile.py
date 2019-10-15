@@ -74,7 +74,6 @@ def __post_es(prefix, name, source_url, content, datetime):
 
 
 def reptile(url, prefix):
-    print(url)
     url = url.replace('home', 'getmsg')
     if 'offset' in url:
         url = url

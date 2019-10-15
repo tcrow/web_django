@@ -5,8 +5,8 @@
  * @LastEditTime: 2019-10-09 16:24:24
  * @Description: 
  -->
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 
 <head>
@@ -20,7 +20,7 @@
     <div class="content">
         <div class="list">
             {% for blog in list %}
-            <li class="list_cell hover_show" onclick="show('{{blog.id}}')">
+            <li class="list_cell hover_show" onclick="show('{{blog.source_url}}')">
                 <span>{{ blog.name }}</span>
             </li>
             {% endfor %}
@@ -48,8 +48,8 @@
         var form = document.getElementById('form')
         form.submit();
     }
-    var show = function (id) {
-        window.location.href = '/show?id=' + id
+    var show = function (source_url) {
+        window.location.href = source_url
     }
 </script>
 

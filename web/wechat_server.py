@@ -26,13 +26,13 @@ def index(request):
     map(sha1.update, list)
     hashcode = sha1.hexdigest()
     if hashcode == signature:
-        parse_message(request)
+        parse(request)
     else:
-        parse_message(request)
+        parse(request)
 
     return HttpResponse()
 
-def parse_message(request):
+def parse(request):
     xml = request.body.decode()
     msg = parse_message(xml)
     logger.error(msg)
